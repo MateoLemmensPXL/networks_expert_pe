@@ -1,0 +1,19 @@
+hostname LAB-R02-C01-R01
+!
+interface Gi0/0.10
+encapsulation dot1q 10
+ip address 172.16.2.2 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.1
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.20
+encapsulation dot1q 20
+ip address 172.16.2.18 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.17
+standby 1 priority 110
+standby 1 preempt
+no shutdown
