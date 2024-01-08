@@ -1,0 +1,43 @@
+enable
+!
+hostname LAB-R02-C01-R01
+!
+configure terminal
+!
+interface fastEthernet0/0.10
+encapsulation dot1q 10
+ip address 172.16.2.2 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.1
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface fastEthernet0/0
+no shutdown
+!
+router ospf 10
+router-id 10.199.66.103
+network 172.16.2.0 0.0.0.15 area 0
+network 10.199.66.96 0.0.0.31 area 0
+passive-interface fastEthernet0/0.10
+!
+interface serial 2/0
+ip address 10.199.66.103 255.255.255.224
+ip ospf 10 area 0
+no shutdown
+!
+ip domain name data.labnet.local
+!
+crypto key generate rsa
+!
+username admin password cisco
+!
+ip ssh version 2
+!
+line vty 0 15
+!
+transport input ssh
+!
+login local
+!

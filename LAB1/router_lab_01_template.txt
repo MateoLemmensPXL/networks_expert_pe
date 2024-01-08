@@ -1,0 +1,103 @@
+enable 
+
+config t
+!
+hostname LAB-R02-C01-R01
+!
+banner motd /!!!  WARNING  !!!
+ACCESS IS RESTRICTED TO AUTHORISED PERSONNEL
+This PXL managed system is equipped with
+a security system intended to prevent and record unauthorized
+access attempts. Unauthorized access or use shall render the user
+liable to criminal and/or civil prosecution./
+!
+ntp server 10.199.64.66
+!
+interface Gi0/0/1.10
+encapsulation dot1q 10
+ip address 172.16.2.2 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.1
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.20
+encapsulation dot1q 20
+ip address 172.16.2.18 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.17
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.30
+encapsulation dot1q 30
+ip address 172.16.2.34 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.33
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.40
+encapsulation dot1q 40
+ip address 172.16.2.50 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.49
+standby 1 priority 110
+standby 1 preempt
+!
+interface Gi0/0/1.50
+encapsulation dot1q 50
+ip address 172.16.2.66 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.65
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.60
+encapsulation dot1q 60
+ip address 172.16.2.82 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.81
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1.80
+encapsulation dot1q 80
+ip address 172.16.2.114 255.255.255.240
+standby version 2
+standby 1 ip 172.16.2.113
+standby 1 priority 110
+standby 1 preempt
+no shutdown
+!
+interface Gi0/0/1
+ip address 10.199.66.103 255.255.255.224
+ip ospf 10 area 0
+no shutdown
+!
+router ospf 10
+router-id 10.199.66.103
+network 172.16.2.0 0.0.0.15 area 0
+network 172.16.2.48 0.0.0.15 area 0
+netwrok 10.199.66.96 0.0.0.31 area 0
+passif-interfaces gig 0/0/1.10
+passif-interfaces gig 0/0/1.40
+!
+ip domain name data.labnet.local
+!
+crypto key generate rsa
+!
+username admin password cisco
+!
+ip ssh version 2
+!
+line vty 0 15
+!
+transport input ssh
+!
+login local

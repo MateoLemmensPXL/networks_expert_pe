@@ -1,0 +1,36 @@
+enable 
+!
+config t
+!
+hostnameLAB-RA01-A01-SW01
+!
+vlan 70
+name cameras
+exit
+!
+interface Vlan70
+no shutdown
+!
+vlan 10
+name basis-LAN
+exit
+!
+interface Vlan10
+no shutdown
+!
+interface Fa1/1
+switchport mode trunk 
+switchport trunk allowed vlan 10,70
+switchport trunk native vlan 99
+no shutdown
+!
+interface Fa0/1
+switchport mode access
+switchport access vlan 10
+no shutdown
+!
+interface Fa2/1
+switchport mode access
+switchport access vlan 10
+no shutdown
+!

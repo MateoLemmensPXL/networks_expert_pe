@@ -1,0 +1,74 @@
+
+
+enable 
+
+config t
+!
+hostname LAB-RA02-A01-SW01
+!
+banner motd /!!!  WARNING  !!!
+ACCESS IS RESTRICTED TO AUTHORISED PERSONNEL
+This PXL managed system is equipped with
+a security system intended to prevent and record unauthorized
+access attempts. Unauthorized access or use shall render the user
+liable to criminal and/or civil prosecution./
+!
+ntp server 10.199.64.66
+!
+vlan 10
+name Management
+!
+vlan 20
+name VM-Hosts
+!
+vlan 30
+name Appliance-Servers
+!
+vlan 40
+name Data-Users
+!
+vlan 50
+name Voice-Users
+!
+vlan 60
+name Wireless-Users
+!
+vlan 80
+name Access-Points
+!
+vlan 99
+name native
+!
+interface range Gi1/0/2-24
+switchport mode acces 
+switchport nonegotiate
+switchport acces vlan 40
+switchport port-security
+switchport port-security maximum 2
+no shutdown
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10,20,30,40,50,60,80
+spanning-tree vlan 10,20,30,40,50,60,80 priority 4096
+!
+interface Gi1/0/1
+switchport mode trunk 
+switchport trunk allowed vlan 10,20,30,40,50,60,80 
+switchport trunk native vlan 99
+no shutdown
+!
+ip domain name data.labnet.local
+!
+crypto key generate rsa
+!
+username admin password cisco
+!
+ip ssh version 2
+!
+line vty 0 15
+!
+transport input ssh
+!
+login local
+!
+end 
